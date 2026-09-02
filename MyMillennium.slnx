@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MyMilleniumWeb/MyMilleniumWeb.csproj" />
+  <Project Path="MyMillennium/MyMillenniumApi.csproj" />
+</Solution>
