@@ -1,7 +1,40 @@
-﻿@page "/"
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+@page "/"
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h3>Hi! Upload image from your computer</h3>
 
-Welcome to your new app.
+<InputFile OnChange="HandleFileSelected" />
+
+<br />
+<br />
+
+<button @onclick="UploadImage" disabled="@(_selectedFile is null)">
+    Upload
+</button>
+
+@if (!string.IsNullOrWhiteSpace(_message))
+{
+    <p>@_message</p>
+}
+
+@code {
+    private IBrowserFile? _selectedFile;
+    private string _message = string.Empty;
+
+    private void HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        _selectedFile = e.File;
+        _message = $"Selected file: {_selectedFile.Name}";
+    }
+
+    private void UploadImage()
+    {
+        if (_selectedFile is null)
+            return;
+
+        _message = $"Ready to upload file {_selectedFile.Name}";
+    }
+}
