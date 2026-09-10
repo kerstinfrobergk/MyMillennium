@@ -3,9 +3,9 @@ using MyMillenniumApi.Data;
 
 namespace MyMillenniumApi
 {
-    public class AppDbContect : DbContext
+    public class AppDbContext : DbContext
     {
-        public AppDbContect(DbContextOptions<AppDbContect> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         { }
 
         public DbSet<ArtItem> ArtItems => Set<ArtItem>();
