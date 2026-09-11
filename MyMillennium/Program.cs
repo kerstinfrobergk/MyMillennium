@@ -1,4 +1,4 @@
-
+using Azure.Storage.Blobs;
 using Microsoft.EntityFrameworkCore;
 using MyMillenniumApi;
 
@@ -19,6 +19,17 @@ namespace MyMillennium
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddSingleton(sp =>
+            {
+                var configuration = sp.GetRequiredService<IConfiguration>();
+
+                var connectionString =
+                    configuration["AzureStorage:ConnectionString"]
+                    ?? throw new InvalidOperationException(
+                        "Azure Storage connection string is missing!");
+
+                return new BlobServiceClient(connectionString);
+            });
 
             var app = builder.Build();
 
