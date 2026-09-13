@@ -13,5 +13,16 @@ namespace MyMillenniumApi.Controllers
         {
             _blobStorageService = blobStorageService;
         }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadTest(IFormFile file)
+        {
+            using var stream = file.OpenReadStream();
+
+            await _blobStorageService.UploadFileAsync(
+                stream, file.FileName);
+
+            return Ok();
+        }
     }
 }
