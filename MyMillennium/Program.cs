@@ -1,5 +1,6 @@
 using Azure.Storage.Blobs;
 using Microsoft.EntityFrameworkCore;
+using MyMillenniumApi.Services;
 using MyMillenniumApi;
 
 namespace MyMillennium
@@ -30,6 +31,9 @@ namespace MyMillennium
 
                 return new BlobServiceClient(connectionString);
             });
+
+            builder.Services.AddScoped<BlobStorageService>();
+
 
             var app = builder.Build();
 
