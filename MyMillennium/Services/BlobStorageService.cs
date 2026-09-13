@@ -4,8 +4,6 @@ namespace MyMillenniumApi.Services
 {
     public class BlobStorageService
     {
-        //TODO: Implement update and delete methods for blob storage
-
         private readonly BlobServiceClient _blobServiceClient;
         private readonly string _containerName;
         public BlobStorageService(BlobServiceClient blobServiceClient, IConfiguration config)
