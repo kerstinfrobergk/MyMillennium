@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using MyMillenniumApi;
 
 namespace MyMillennium.Functions;
 
@@ -25,7 +26,10 @@ public class Function1
         _logger.LogInformation("Message Body: {body}", message.Body);
         _logger.LogInformation("Message Content-Type: {contentType}", message.ContentType);
 
-        // Complete the message
+        var processArtImage = message.Body.ToObjectFromJson<ProcessArtImage>();
+
+        _logger.LogInformation($"Message retrieved from queue. Processing ArtItem: {processArtImage?.ArtItemId}, BlobName: {processArtImage?.BlobItemName}");
+
         await messageActions.CompleteMessageAsync(message);
     }
 }
