@@ -10,11 +10,13 @@ namespace MyMillenniumApi.Controllers
     {
         private readonly AppDbContext _dbContext;
         private readonly BlobStorageService _blobStorageService;
+        private readonly ServiceBusService _serviceBusService;
 
-        public ArtController(AppDbContext dbContext, BlobStorageService blobStorageService)
+        public ArtController(AppDbContext dbContext, BlobStorageService blobStorageService, ServiceBusService serviceBusService)
         {
             _dbContext = dbContext;
             _blobStorageService = blobStorageService;
+            _serviceBusService = serviceBusService;
         }
 
         [HttpPost("upload")]
@@ -45,6 +47,8 @@ namespace MyMillenniumApi.Controllers
             var message = new ProcessArtImage(
                 artItem.Id,
                 blobName);
+
+            await _serviceBusService.SendProcessArtImageAsync(message);
 
             return Ok();
         }
