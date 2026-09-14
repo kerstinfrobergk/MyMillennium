@@ -42,6 +42,10 @@ namespace MyMillenniumApi.Controllers
             _dbContext.ArtItems.Add(artItem);
             await _dbContext.SaveChangesAsync();
 
+            var message = new ProcessArtImage(
+                artItem.Id,
+                blobName);
+
             return Ok();
         }
     }
