@@ -11,7 +11,5 @@ namespace MyMillenniumApi.Services
             _serviceBusClient = serviceBusClient;
         }
 
-        // TODO: Add service to DI
-
     }
 }
