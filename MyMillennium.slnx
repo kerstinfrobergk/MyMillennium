@@ -1,5 +1,9 @@
 <Solution>
   <Project Path="MyMilleniumWeb/MyMilleniumWeb.csproj" />
   <Project Path="MyMillennium.Functions/MyMillennium.Functions.csproj" Id="d2bdba71-3bc1-40bf-b0e5-d0522e8eee61" />
+  <Project Path="MyMillennium.Web/mymillennium.web.esproj">
+    <Build />
+    <Deploy />
+  </Project>
   <Project Path="MyMillennium/MyMillenniumApi.csproj" />
 </Solution>
