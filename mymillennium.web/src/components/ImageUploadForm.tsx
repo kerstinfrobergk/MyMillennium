@@ -1,4 +1,13 @@
+import { uploadImage } from "../services/artService";
+import { useState } from "react";
+
+
 export function ImageUploadForm() {
+    const [imageFile, setImageFile] = useState(null);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [category, setCategory] = useState(null);
+
     return (
       <section
         style={{
@@ -10,8 +19,21 @@ export function ImageUploadForm() {
         }} >
         <div style={{ marginBottom: '15px' }}>
           <span> Choose a file to upload: </span>
-          <button style={{ padding: '2px 14px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-            Browse
+          <button style={{ padding: '2px 14px', marginRight: '10px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+            browse
+          </button>
+          <button
+            style={{ padding: '2px 14 px', backgroundColor: 'violet', color: '#fff', borderRadius: '4px', cursor: 'pointer' }}
+
+            // onClick={() =>
+            //     uploadImage(
+            //         "fdsildf",
+            //         "dsfsdf",
+            //         "dsfs",
+            //         0
+            //     ) }
+            >
+            upload
           </button>
         </div>
 
@@ -24,7 +46,10 @@ export function ImageUploadForm() {
             justifyItems: 'start',
           }} >
           <span>Title:</span>
-          <input type="text" style={{ width: '100%', boxSizing: 'border-box' }} name="title" />
+          <input type="text"
+            style={{ width: '100%', boxSizing: 'border-box' }}
+            name="title"
+            onChange={} />
 
           <span>Description:</span>
           <input type="text" style={{ width: '100%', boxSizing: 'border-box' }} name="description" />
