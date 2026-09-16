@@ -38,7 +38,7 @@
     --border: #2e303a;
     --code-bg: #1f2028;
     --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-bg: rgba(252, 138, 132, 0.15);
     --accent-border: rgba(192, 132, 252, 0.5);
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
@@ -108,4 +108,22 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+.buttonPlay {
+  border-radius: 5px;
+  font-size: 15px;
+  padding: 8px 16px;
+  background: rgba(14, 185, 22, 0.985);
+  color: rgba(247, 245, 244, 0.816);
+  border: 2px solid rgba(83, 83, 83, 0.943);
+}
+
+.buttonStop {
+  border-radius: 5px;
+  font-size: 15px;
+  padding: 8px 16px;
+  background: rgba(238, 49, 39, 0.888);
+  color: rgba(247, 245, 244, 0.816);
+  border: 2px solid rgba(83, 83, 83, 0.943);
 }
