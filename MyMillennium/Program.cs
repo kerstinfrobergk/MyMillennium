@@ -18,6 +18,17 @@ namespace MyMillennium
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("ReactClient", policy =>
+                {
+                    policy
+                        .WithOrigins("http://localhost:61587")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -60,6 +71,8 @@ namespace MyMillennium
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("ReactClient");
 
             app.UseAuthorization();
 

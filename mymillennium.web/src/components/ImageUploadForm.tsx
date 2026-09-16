@@ -6,12 +6,22 @@ export function ImageUploadForm() {
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [category, setCategory] = useState(1);
+    const [category, setCategory] = useState(0);
 
-    //Create a reference that can point to an HTML input element; initially it points to nothing.
     const fileInputRef = useRef<HTMLInputElement>(null);
-    
 
+    async function handleUpload(){
+        if (!imageFile){
+            return;
+        }
+
+        await uploadImage(
+            imageFile,
+            title,
+            description,
+            category
+        )
+    }
 
     return (
       <section
@@ -73,21 +83,6 @@ export function ImageUploadForm() {
                 }}
             >
             </input>
-
-          
-            <button
-                style={{ padding: '2px 14 px', backgroundColor: 'violet', color: '#fff', borderRadius: '4px', cursor: 'pointer' }}
-
-                // onClick={() =>
-                //     uploadImage(
-                //         "fdsildf",
-                //         "dsfsdf",
-                //         "dsfs",
-                //         0
-                //     ) }
-                >
-                upload
-            </button>
         </div>
 
         <section id="file-info"
@@ -116,10 +111,22 @@ export function ImageUploadForm() {
             style={{ width: '100%', boxSizing: 'border-box' }}
             value={category}
             onChange={(event) => setCategory(Number(event.target.value))} >
+            <option value={0}>Inspiration</option>
             <option value={1}>Profile picture</option>
-            <option value={2}>Inspiration</option>
           </select>
         </section>
+
+        <button
+            onClick={handleUpload}
+            style={{
+                padding: '2px 14 px',
+                backgroundColor: 'violet',
+                color: '#fff',
+                borderRadius: '4px',
+                cursor: 'pointer' }}
+        >
+            upload
+        </button>
       </section>
     )
 }
