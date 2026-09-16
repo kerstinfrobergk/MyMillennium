@@ -6,7 +6,7 @@ export function ImageUploadForm() {
     const [imageFile, setImageFile] = useState(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [category, setCategory] = useState(null);
+    const [category, setCategory] = useState(1);
 
     return (
       <section
@@ -49,15 +49,22 @@ export function ImageUploadForm() {
           <input type="text"
             style={{ width: '100%', boxSizing: 'border-box' }}
             name="title"
-            onChange={} />
-
+            value={title}
+            onChange={(event) => setTitle(event.target.value)} />
           <span>Description:</span>
-          <input type="text" style={{ width: '100%', boxSizing: 'border-box' }} name="description" />
-
+          <input type="text"
+            style={{ width: '100%', boxSizing: 'border-box' }}
+            name="description"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)} />
           <span>Category:</span>
-          <select name="category" style={{ width: '100%', boxSizing: 'border-box' }}>
-            <option value="profile-picture">Profile picture</option>
-            <option value="inspiration">Inspiration</option>
+          <select name="category"
+            style={{ width: '100%', boxSizing: 'border-box' }}
+            value={category}
+            onChange={(event) => setCategory(Number(event.target.value))} >
+            <option value={1}>Profile picture</option>
+            <option value={2}>Inspiration</option>
+
           </select>
         </section>
       </section>
