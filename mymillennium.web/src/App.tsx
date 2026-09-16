@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import React from 'react'
+import { ImageUploadForm } from './components/ImageUploadForm'
 import './App.css'
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,7 +22,9 @@ function App() {
         </div>
       </section>
       <br/>
-      <section
+      <ImageUploadForm/>
+      
+      {/* <section
         style={{
           padding: '10px',
           minWidth: '380px',
@@ -54,7 +58,7 @@ function App() {
             <option value="inspiration">Inspiration</option>
           </select>
         </section>
-      </section>
+      </section> */}
 <br></br>
       <section>
         <div>
