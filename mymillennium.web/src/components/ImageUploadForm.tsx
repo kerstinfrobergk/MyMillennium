@@ -1,12 +1,17 @@
 import { uploadImage } from "../services/artService";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 
 export function ImageUploadForm() {
-    const [imageFile, setImageFile] = useState(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState(1);
+
+    //Create a reference that can point to an HTML input element; initially it points to nothing.
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    
+
 
     return (
       <section
@@ -17,24 +22,72 @@ export function ImageUploadForm() {
           margin: '8px auto',
           background: '#e1dfdf'
         }} >
-        <div style={{ marginBottom: '15px' }}>
-          <span> Choose a file to upload: </span>
-          <button style={{ padding: '2px 14px', marginRight: '10px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-            browse
-          </button>
-          <button
-            style={{ padding: '2px 14 px', backgroundColor: 'violet', color: '#fff', borderRadius: '4px', cursor: 'pointer' }}
-
-            // onClick={() =>
-            //     uploadImage(
-            //         "fdsildf",
-            //         "dsfsdf",
-            //         "dsfs",
-            //         0
-            //     ) }
+        <div
+            style={{
+                marginBottom: '15px',
+                display: "grid",
+                gridTemplateColumns: "auto 1fr auto",
+                gap: "10px",
+                alignItems: "center"
+            }}
+        >
+            <span style={{ whiteSpace: "nowrap"}} >
+                Upload image from computer: </span>
+            <span
+                style={{
+                    border: "1px solid #888",
+                    background: "white",
+                    padding: "3px 8px",
+                    minWidth: "180px",
+                    textAlign: "left",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap"
+                }}
             >
-            upload
-          </button>
+                {imageFile ? imageFile.name : "No file selected"}
+            </span>
+
+            <button onClick={() => fileInputRef.current?.click()}
+                style={{
+                    padding: '2px 14px',
+                    marginRight: '10px',
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    borderRadius: '4px',
+                    cursor: 'pointer' }}>
+                browse
+            </button>
+
+            <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={(event) => {
+                    const file = event.target.files?.[0];
+
+                    if (file) {
+                        setImageFile(file);
+                    }
+                }}
+            >
+            </input>
+
+          
+            <button
+                style={{ padding: '2px 14 px', backgroundColor: 'violet', color: '#fff', borderRadius: '4px', cursor: 'pointer' }}
+
+                // onClick={() =>
+                //     uploadImage(
+                //         "fdsildf",
+                //         "dsfsdf",
+                //         "dsfs",
+                //         0
+                //     ) }
+                >
+                upload
+            </button>
         </div>
 
         <section id="file-info"
@@ -44,7 +97,8 @@ export function ImageUploadForm() {
             rowGap: '15px',
             alignItems: 'center',
             justifyItems: 'start',
-          }} >
+          }}
+        >
           <span>Title:</span>
           <input type="text"
             style={{ width: '100%', boxSizing: 'border-box' }}
@@ -64,7 +118,6 @@ export function ImageUploadForm() {
             onChange={(event) => setCategory(Number(event.target.value))} >
             <option value={1}>Profile picture</option>
             <option value={2}>Inspiration</option>
-
           </select>
         </section>
       </section>
