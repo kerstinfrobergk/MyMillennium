@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { ArtItem } from "../models/ArtItem";
 
 const baseUrl = "https://localhost:7164";
 const uploadPath = "/api/Art/upload";
@@ -25,10 +26,12 @@ export async function uploadImage(
     return response;
 }
 
-export async function getImages(){
+export async function getImages(): Promise<ArtItem[]> {
     const response = await fetch(baseUrl + getPath, {
         method: "GET"
     });
 
-    return response;
+    const fetchedGalleryItems: ArtItem[] = await response.json();
+
+    return fetchedGalleryItems;
 }
