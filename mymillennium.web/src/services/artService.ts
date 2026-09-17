@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { ArtItem } from "../models/ArtItem";
 
 const baseUrl = "https://localhost:7164";

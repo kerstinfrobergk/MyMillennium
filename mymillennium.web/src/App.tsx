@@ -2,6 +2,7 @@ import { useState } from 'react'
 import React from 'react'
 import { ImageUploadForm } from './components/ImageUploadForm'
 import './App.css'
+import { ImageGallery } from './components/ImageGallery'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       </section>
       <br/>
       <ImageUploadForm/>
+      <ImageGallery/>
       
       {/* <section
         style={{
