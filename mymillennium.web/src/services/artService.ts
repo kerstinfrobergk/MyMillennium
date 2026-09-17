@@ -2,6 +2,7 @@ import { useState } from "react";
 
 const baseUrl = "https://localhost:7164";
 const uploadPath = "/api/Art/upload";
+const getPath = "/api/Art/getImages";
 
 export async function uploadImage(
     file: File,
@@ -19,6 +20,14 @@ export async function uploadImage(
     const response = await fetch(baseUrl + uploadPath, {
         method: "POST",
         body: formData
+    });
+
+    return response;
+}
+
+export async function getImages(){
+    const response = await fetch(baseUrl + getPath, {
+        method: "GET"
     });
 
     return response;
