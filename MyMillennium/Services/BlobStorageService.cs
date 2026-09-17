@@ -19,5 +19,15 @@ namespace MyMillenniumApi.Services
 
             await blobClient.UploadAsync(stream, overwrite: true);
         }
+
+        public string GetBlobUrl(string blobName)
+        {
+            var blobContainerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
+            var blobClient = blobContainerClient.GetBlobClient(blobName);
+            
+            var blobStringUrl = blobClient.Uri.ToString();
+
+            return blobStringUrl;
+        }
     }
 }

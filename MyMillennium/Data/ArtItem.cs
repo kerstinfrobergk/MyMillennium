@@ -11,6 +11,7 @@
 
     public enum Category
     {
+        //TODO: Consider what categories make sense
         Inspiration = 0,
         ProfilePicture = 1,
     }

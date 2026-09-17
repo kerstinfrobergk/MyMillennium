@@ -62,7 +62,7 @@ namespace MyMillenniumApi.Controllers
 
             var galleryItemsResult = await _dbContext.ArtItems
                 .Where(x => x.BlobName != null &&
-                            x.ItemCategory == Category.Inspiration)
+                            (x.ItemCategory == Category.Inspiration || x.ItemCategory == Category.ProfilePicture))  //TODO: Consider what filtering makes sense
                 .OrderByDescending(x => x.Id)
                 .Take(10)
                 .ToListAsync();
@@ -72,7 +72,7 @@ namespace MyMillenniumApi.Controllers
                 var artItemDto = new ArtItemDto()
                 {
                     Id = galleryItem.Id,
-                    ImageUrl = "",//
+                    ImageUrl = _blobStorageService.GetBlobUrl(galleryItem.BlobName),
                     Title = galleryItem.Title,
                     Description = galleryItem.Description
                 };
@@ -80,7 +80,7 @@ namespace MyMillenniumApi.Controllers
                 galleryItems.Add(artItemDto);
             }
 
-            return Ok();
+            return Ok(galleryItems);
         }
     }
 }
