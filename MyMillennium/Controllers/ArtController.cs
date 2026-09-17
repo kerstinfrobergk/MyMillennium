@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyMillenniumApi.Data;
+using MyMillenniumApi.DTOs;
 using MyMillenniumApi.Services;
 
 namespace MyMillenniumApi.Controllers
@@ -49,6 +51,34 @@ namespace MyMillenniumApi.Controllers
                 blobName);
 
             await _serviceBusService.SendProcessArtImageAsync(message);
+
+            return Ok();
+        }
+
+        [HttpGet("getImages")]
+        public async Task<IActionResult> GetImagesAsync()
+        {
+            var galleryItems = new List<ArtItemDto>();
+
+            var galleryItemsResult = await _dbContext.ArtItems
+                .Where(x => x.BlobName != null &&
+                            x.ItemCategory == Category.Inspiration)
+                .OrderByDescending(x => x.Id)
+                .Take(10)
+                .ToListAsync();
+
+            foreach (var galleryItem in galleryItemsResult)
+            {
+                var artItemDto = new ArtItemDto()
+                {
+                    Id = galleryItem.Id,
+                    ImageUrl = "",//
+                    Title = galleryItem.Title,
+                    Description = galleryItem.Description
+                };
+
+                galleryItems.Add(artItemDto);
+            }
 
             return Ok();
         }
