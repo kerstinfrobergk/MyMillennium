@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using Azure.Storage.Sas;
 
 namespace MyMillenniumApi.Services
 {
@@ -20,14 +21,16 @@ namespace MyMillenniumApi.Services
             await blobClient.UploadAsync(stream, overwrite: true);
         }
 
-        public string GetBlobUrl(string blobName)
+        public string GetBlobSasUrl(string blobName)
         {
             var blobContainerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
             var blobClient = blobContainerClient.GetBlobClient(blobName);
-            
-            var blobStringUrl = blobClient.Uri.ToString();
 
-            return blobStringUrl;
+            var sasUri = blobClient.GenerateSasUri(
+                BlobSasPermissions.Read,
+                DateTimeOffset.UtcNow.AddMinutes(30));
+
+            return sasUri.ToString();
         }
     }
 }

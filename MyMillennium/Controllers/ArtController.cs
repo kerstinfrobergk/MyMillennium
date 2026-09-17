@@ -72,7 +72,7 @@ namespace MyMillenniumApi.Controllers
                 var artItemDto = new ArtItemDto()
                 {
                     Id = galleryItem.Id,
-                    ImageUrl = _blobStorageService.GetBlobUrl(galleryItem.BlobName),
+                    ImageUrl = _blobStorageService.GetBlobSasUrl(galleryItem.BlobName),
                     Title = galleryItem.Title,
                     Description = galleryItem.Description
                 };
