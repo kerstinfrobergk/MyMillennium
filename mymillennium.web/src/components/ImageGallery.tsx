@@ -23,7 +23,7 @@ export function ImageGallery(){
                 minWidth: '400px',
                 maxWidth: '500px',
                 minHeight: '200px',
-                margin: '8px',
+                margin: '8px auto',
                 background: '#78b8c6',
                 border: "4px solid #9d8e09",                
             }} >
