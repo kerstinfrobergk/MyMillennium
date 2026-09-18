@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyMillennium.Contracts.Messages;
-using MyMillenniumApi.Data;
+using MyMillenniumApi.DataAccess;
 using MyMillenniumApi.DTOs;
+using MyMillenniumApi.Entities;
 using MyMillenniumApi.Services;
 
 namespace MyMillenniumApi.Controllers

@@ -2,7 +2,7 @@ using Azure.Messaging.ServiceBus;
 using Azure.Storage.Blobs;
 using Microsoft.EntityFrameworkCore;
 using MyMillenniumApi.Services;
-using MyMillenniumApi;
+using MyMillenniumApi.DataAccess;
 
 namespace MyMillennium
 {

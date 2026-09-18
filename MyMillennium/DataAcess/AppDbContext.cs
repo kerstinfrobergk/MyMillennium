@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyMillenniumApi.Data;
+using MyMillenniumApi.Entities;
 
-namespace MyMillenniumApi
+namespace MyMillenniumApi.DataAccess
 {
     public class AppDbContext : DbContext
     {
