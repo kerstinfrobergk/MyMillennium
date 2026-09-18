@@ -7,7 +7,7 @@
         public string Description { get; set; } = string.Empty;
         public Category ItemCategory { get; set; } = Category.Inspiration;
         public string BlobName { get; set; } = string.Empty;
-        public ProcessingStatus ProcessingStatus { get; set; }
+        public ProcessingStatus ProcessingStatus { get; set; } = ProcessingStatus.Pending;
     }
 
     public enum Category
