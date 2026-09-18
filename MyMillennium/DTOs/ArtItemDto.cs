@@ -1,6 +1,4 @@
-﻿using MyMillenniumApi.Data;
-
-namespace MyMillenniumApi.DTOs
+﻿namespace MyMillenniumApi.DTOs
 {
     public class ArtItemDto
     {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MyMillennium.Contracts.Messages;
 using MyMillenniumApi.Data;
 using MyMillenniumApi.DTOs;
 using MyMillenniumApi.Services;

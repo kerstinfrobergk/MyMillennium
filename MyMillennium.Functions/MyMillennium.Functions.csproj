@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyMillennium.Contracts\MyMillennium.Contracts.csproj" />
     <ProjectReference Include="..\MyMillennium\MyMillenniumApi.csproj" />
   </ItemGroup>
 
