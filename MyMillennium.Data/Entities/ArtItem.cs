@@ -1,4 +1,4 @@
-﻿namespace MyMillenniumApi.Entities
+﻿namespace MyMillennium.Data.Entities
 {
     public class ArtItem
     {

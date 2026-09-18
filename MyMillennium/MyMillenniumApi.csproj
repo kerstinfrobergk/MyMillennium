@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyMillennium.Contracts\MyMillennium.Contracts.csproj" />
+    <ProjectReference Include="..\MyMillennium.Data\MyMillennium.Data.csproj" />
   </ItemGroup>
 
 </Project>
