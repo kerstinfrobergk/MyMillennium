@@ -1,8 +1,5 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MyMillennium.Functions.Services
 {
@@ -26,5 +23,14 @@ namespace MyMillennium.Functions.Services
 
             return response.Value.Content;
         }
+
+        public async Task UploadBlobAsync(Stream stream, string blobName)
+        {
+            var blobContainerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
+            var blobClient = blobContainerClient.GetBlobClient(blobName);
+
+            await blobClient.UploadAsync(stream, overwrite: true);
+        }
+
     }
 }

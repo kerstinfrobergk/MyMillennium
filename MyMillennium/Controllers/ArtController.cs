@@ -35,7 +35,7 @@ namespace MyMillenniumApi.Controllers
             var filePathExtension = Path.GetExtension(file.FileName);
             var blobName = $"{Guid.NewGuid()}{filePathExtension}";
 
-            await _blobStorageService.UploadFileAsync(stream, blobName);
+            await _blobStorageService.UploadBlobAsync(stream, blobName);
 
             var artItem = new ArtItem()
             {

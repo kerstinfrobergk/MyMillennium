@@ -28,7 +28,6 @@ namespace MyMillennium.Functions.Services
                 return;
             }
 
-            // TODO: Retrieve the blob represented by processArtImage.BlobName
             var originalBlob = await _blobStorageService.DownloadBlobAsync(processArtImage.BlobName);
 
             if(originalBlob == null)
@@ -36,7 +35,13 @@ namespace MyMillennium.Functions.Services
                 return;
             }
 
-            // TODO: Generate thumbnail
+            var thumbnail = _imageThumbnailService.ResizeImageToThumbnailSize(originalBlob);
+
+            var thumbnailBlobName = $"thumbnail/{Guid.NewGuid()}";
+            
+            await _blobStorageService.UploadBlobAsync(thumbnail, thumbnailBlobName);
+
+            // TODO: Update ArtItem with ProcessingStatus and thumbnail
         }
     }
 }
