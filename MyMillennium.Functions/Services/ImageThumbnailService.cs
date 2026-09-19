@@ -5,22 +5,24 @@ namespace MyMillennium.Functions.Services
 {
     public class ImageThumbnailService
     {
-
         public Stream ResizeImageToThumbnailSize(Stream originalBlob)
         {
-            var image = Image.Load(originalBlob);
+            using var image = Image.Load(originalBlob);
 
-            image.Mutate(x => x.AutoOrient().Resize(new ResizeOptions
+            using var thumbnail = image.Clone(x => x.AutoOrient().Resize(new ResizeOptions
             {
                 Size = new Size(300, 300),
                 Mode = ResizeMode.Crop,
-                PadColor = Color.White,
                 Sampler = KnownResamplers.Bicubic
             }));
 
-            // TODO: Encode resized image/thumbnail into a new Stream
+            var thumbnailStream = new MemoryStream();
 
-            // TODO: Returning Stream
+            thumbnail.SaveAsJpeg(thumbnailStream);
+
+            thumbnailStream.Position = 0;
+
+            return thumbnailStream;
         }
     }
 }
