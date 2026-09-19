@@ -8,6 +8,7 @@
         public Category ItemCategory { get; set; } = Category.Inspiration;
         public string BlobName { get; set; } = string.Empty;
         public ProcessingStatus ProcessingStatus { get; set; } = ProcessingStatus.Pending;
+        public string? ThumbnailBlobName {  get; set; } = string.Empty;
     }
 
     public enum Category
