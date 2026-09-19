@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyMillennium.Contracts.Messages;
 using MyMillennium.Data.DataAccess;
+using MyMillennium.Data.Entities;
 
 namespace MyMillennium.Functions.Services
 {
@@ -20,28 +21,33 @@ namespace MyMillennium.Functions.Services
         public async Task ProcessArtItemAsync(ProcessArtImage processArtImage)
         {
             var artItem = await _dbContext.ArtItems
-                .Where(x => x.Id == processArtImage.ArtItemId)
-                .FirstOrDefaultAsync();
+                .FindAsync(processArtImage.ArtItemId);
 
             if (artItem == null)
             {
                 return;
             }
 
-            var originalBlob = await _blobStorageService.DownloadBlobAsync(processArtImage.BlobName);
+            using var originalBlob = await _blobStorageService
+                .DownloadBlobAsync(processArtImage.BlobName);
 
             if(originalBlob == null)
             {
                 return;
             }
 
-            var thumbnail = _imageThumbnailService.ResizeImageToThumbnailSize(originalBlob);
+            using var thumbnail = _imageThumbnailService
+                .ResizeImageToThumbnailSize(originalBlob);
 
-            var thumbnailBlobName = $"thumbnail/{Guid.NewGuid()}";
+            var thumbnailBlobName = $"thumbnail/{Guid.NewGuid()}.jpg";
             
-            await _blobStorageService.UploadBlobAsync(thumbnail, thumbnailBlobName);
+            await _blobStorageService
+                .UploadBlobAsync(thumbnail, thumbnailBlobName);
 
-            // TODO: Update ArtItem with ProcessingStatus and thumbnail
+            artItem.ThumbnailBlobName = thumbnailBlobName;
+            artItem.ProcessingStatus = ProcessingStatus.Completed;
+
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
