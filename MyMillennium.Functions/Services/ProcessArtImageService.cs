@@ -1,4 +1,5 @@
-﻿using MyMillennium.Contracts.Messages;
+﻿using Microsoft.EntityFrameworkCore;
+using MyMillennium.Contracts.Messages;
 using MyMillennium.Data.DataAccess;
 
 namespace MyMillennium.Functions.Services
@@ -14,9 +15,18 @@ namespace MyMillennium.Functions.Services
 
         public async Task ProcessArtItemAsync(ProcessArtImage processArtImage)
         {
-            //var artItemToUpdate = _dbContext.ArtItems
+            var artItem = await _dbContext.ArtItems
+                .Where(x => x.Id == processArtImage.ArtItemId)
+                .FirstOrDefaultAsync();
 
+            if (artItem == null)
+            {
+                return;
+            }
 
+            // TODO: Retrieve the blob represented by processArtImage.BlobName
+
+            // TODO: Generate thumbnail
         }
     }
 }
