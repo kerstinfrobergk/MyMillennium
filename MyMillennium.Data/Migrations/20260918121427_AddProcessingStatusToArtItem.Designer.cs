@@ -8,11 +8,11 @@ using MyMillennium.Data.DataAccess;
 
 #nullable disable
 
-namespace MyMillenniumApi.Migrations
+namespace MyMillennium.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260910213232_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260918121427_AddProcessingStatusToArtItem")]
+    partial class AddProcessingStatusToArtItem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,9 @@ namespace MyMillenniumApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ItemCategory")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProcessingStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")

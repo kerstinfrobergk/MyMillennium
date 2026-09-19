@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace MyMillenniumApi.Migrations
+namespace MyMillennium.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
