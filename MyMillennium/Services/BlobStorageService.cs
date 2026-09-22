@@ -10,7 +10,7 @@ namespace MyMillenniumApi.Services
         public BlobStorageService(BlobServiceClient blobServiceClient, IConfiguration config)
         {
             _blobServiceClient = blobServiceClient;
-            _containerName = config["AzureStorage:ContainerName"] ?? throw new InvalidOperationException("Azure Storage container name is not valid.");
+            _containerName = config["AzureStorage:ContainerName"] ?? throw new InvalidOperationException("Blob container name could not be found.");
         }
 
         public async Task UploadBlobAsync(Stream stream, string blobName)

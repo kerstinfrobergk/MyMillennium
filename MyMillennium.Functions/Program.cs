@@ -12,14 +12,14 @@ var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Configuration.GetConnectionString("LocalDb")));
 
 builder.Services.AddSingleton(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
 
     var connectionString =
-        configuration["AzureStorage:ConnectionString"]
+        configuration.GetConnectionString("AzureStorage")
         ?? throw new InvalidOperationException(
             "Azure Storage connection string is missing!");
 

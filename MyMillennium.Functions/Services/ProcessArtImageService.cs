@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyMillennium.Contracts.Messages;
+﻿using MyMillennium.Contracts.Messages;
 using MyMillennium.Data.DataAccess;
 using MyMillennium.Data.Entities;
 
@@ -25,6 +24,7 @@ namespace MyMillennium.Functions.Services
 
             if (artItem == null)
             {
+                //TODO: throw an exception instead so message don't complete
                 return;
             }
 
@@ -33,6 +33,7 @@ namespace MyMillennium.Functions.Services
 
             if(originalBlob == null)
             {
+                //TODO: throw an exception instead so message don't complete
                 return;
             }
 

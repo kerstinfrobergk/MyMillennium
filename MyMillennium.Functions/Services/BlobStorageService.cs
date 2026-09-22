@@ -11,7 +11,8 @@ namespace MyMillennium.Functions.Services
         public BlobStorageService(BlobServiceClient blobStorageService, IConfiguration config)
         {
             _blobServiceClient = blobStorageService;
-            _containerName = config["AzureStorage:ContainerName"] ?? throw new InvalidOperationException("Azure Storage container name could not be found.");
+            _containerName = config["BlobContainerName"]
+                ?? throw new InvalidOperationException("Blob container name could not be found.");
         }
 
         public async Task<Stream> DownloadBlobAsync(string blobName)
