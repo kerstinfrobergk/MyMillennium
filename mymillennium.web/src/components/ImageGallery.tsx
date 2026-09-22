@@ -17,18 +17,9 @@ export function ImageGallery(){
     }, []);
 
     return(
-        <section
-            style={{
-                padding: '10px',
-                minWidth: '400px',
-                maxWidth: '500px',
-                minHeight: '200px',
-                margin: '8px auto',
-                background: '#78b8c6',
-                border: "4px solid #9d8e09",                
-            }} >
+        <section className="image-gallery" >
             <div>
-                <h2 style={{ color: '#063b4b' }}>Gallery</h2>
+                <h2 className="gallery-heading">Gallery</h2>
             </div>
             <div className="gallery-thumbnails" >
                 {galleryItems.map((item) => (
@@ -53,18 +44,16 @@ export function ImageGallery(){
             </div>
 
             {selectedImage && (
-                <div style={{ marginTop: "10px" }}>
+                <div className="selected-image" >
                     <img
-                        style={{ width: "100%", display: "block" }}
                         src={selectedImage.imageUrl}
-                        alt={selectedImage.title}
+                        alt={selectedImage.title ?? ""}
                     />
 
                     <strong>{selectedImage.title}</strong>
                     <p>{selectedImage.description}</p>
                 </div>
             )}
-
         </section>
     )
 }

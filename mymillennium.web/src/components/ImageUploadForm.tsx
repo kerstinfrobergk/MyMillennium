@@ -24,48 +24,17 @@ export function ImageUploadForm() {
     }
 
     return (
-      <section
-        style={{
-          padding: '10px',
-          minWidth: '400px',
-          maxWidth: '500px',
-          margin: '8px auto',
-          background: '#e1dfdf'
-        }} >
-        <div
-            style={{
-                marginBottom: '15px',
-                display: "grid",
-                gridTemplateColumns: "auto 1fr auto",
-                gap: "10px",
-                alignItems: "center"
-            }}
-        >
-            <span style={{ whiteSpace: "nowrap"}} >
+      <section className="image-upload-form">
+        <div className="file-upload" >
+            <span className="file-upload-label" >
                 Upload image from computer: </span>
-            <span
-                style={{
-                    border: "1px solid #888",
-                    background: "white",
-                    padding: "3px 8px",
-                    minWidth: "180px",
-                    textAlign: "left",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap"
-                }}
-            >
+            <span className="file-name" >
                 {imageFile ? imageFile.name : "No file selected"}
             </span>
 
-            <button onClick={() => fileInputRef.current?.click()}
-                style={{
-                    padding: '2px 14px',
-                    marginRight: '10px',
-                    backgroundColor: '#007bff',
-                    color: '#fff',
-                    borderRadius: '4px',
-                    cursor: 'pointer' }}>
+            <button
+                onClick={() => fileInputRef.current?.click()}
+                className="browse-button" >
                 browse
             </button>
 
@@ -85,46 +54,29 @@ export function ImageUploadForm() {
             </input>
         </div>
 
-        <section id="file-info"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '25% 65%',
-            rowGap: '15px',
-            alignItems: 'center',
-            justifyItems: 'start',
-          }}
-        >
+        <section className="file-info">
           <span>Title:</span>
-          <input type="text"
-            style={{ width: '100%', boxSizing: 'border-box' }}
+          <input
+            type="text"
             name="title"
             value={title}
             onChange={(event) => setTitle(event.target.value)} />
           <span>Description:</span>
           <input type="text"
-            style={{ width: '100%', boxSizing: 'border-box' }}
             name="description"
             value={description}
             onChange={(event) => setDescription(event.target.value)} />
           <span>Category:</span>
           <select name="category"
-            style={{ width: '100%', boxSizing: 'border-box' }}
             value={category}
             onChange={(event) => setCategory(Number(event.target.value))} >
             <option value={0}>Inspiration</option>
             <option value={1}>Profile picture</option>
           </select>
         </section>
-
-        <button
-            onClick={handleUpload}
-            style={{
-                padding: '2px 14 px',
-                backgroundColor: 'violet',
-                color: '#fff',
-                borderRadius: '4px',
-                cursor: 'pointer' }}
-        >
+        <br></br>
+        <button className="upload-button"
+            onClick={handleUpload} >
             upload
         </button>
       </section>
