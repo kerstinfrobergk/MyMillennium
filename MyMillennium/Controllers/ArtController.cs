@@ -76,7 +76,10 @@ namespace MyMillenniumApi.Controllers
                     Id = galleryItem.Id,
                     ImageUrl = _blobStorageService.GetBlobSasUrl(galleryItem.BlobName),
                     Title = galleryItem.Title,
-                    Description = galleryItem.Description
+                    Description = galleryItem.Description,
+                    ThumbnailUrl = galleryItem.ThumbnailBlobName != null
+                        ? _blobStorageService.GetBlobSasUrl(galleryItem.ThumbnailBlobName)
+                        : null
                 };
 
                 galleryItems.Add(artItemDto);

@@ -2,9 +2,10 @@
 {
     public class ArtItemDto
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public required string ImageUrl { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
+        public string? ThumbnailUrl { get; set; }
     }
 }
