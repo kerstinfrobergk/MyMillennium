@@ -8,7 +8,7 @@ function App() {
   return (
     <>
     <div className="wrapper">
-      <header className="header">This page is up!</header>
+      <header className="header">˚*ੈ✩‧Last updated: September 2026✩˚</header>
 
       <div className="welcome">
         <h1 className="welcome-title">
@@ -24,13 +24,16 @@ function App() {
         </span>
       </div>
 
-      <div className="blogtext">
-        <h2 className="blogtitle">
-          Next plan for implementation
-        </h2>
-        <p>
-          sdfsdfds
+      <div className="blog">
+        <p className="blogtitle">
+            Updates
         </p>
+
+        <ul className="updates-list">
+          <li>✧ New pictures added to gallery</li>          
+          <li>✧ More stuff coming soon...</li>
+          <li>✧ Thanks for visiting &lt;3</li>
+        </ul>
       </div>
       
       <main className='content'>

@@ -2,7 +2,7 @@
     grid-area: header;
     background-color: #2a30d3;
     padding: 4px;
-    text-align: center;
+    text-align: right;
 }
 
 .footer {
@@ -42,15 +42,22 @@
     height: 80px;
 }
 
-.blogtext {
+.blog {
+    grid-area: blog;
     margin: 12px 32px;
-    grid-area: blogtext;
 }
 
 .blogtitle {
+    margin-top: 0 0 8px 0;
     color: black;
     font-weight: bold;
     font-size: 20px
+}
+
+.updates-list {
+    margin: 0;
+    list-style: none;
+    padding-left: 0;
 }
 
 .wrapper {
@@ -63,7 +70,7 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
     "header header header"
-    "welcome blogtext blogtext"
+    "welcome blog blog"
     "content content content"
     "footer footer footer";
 }
