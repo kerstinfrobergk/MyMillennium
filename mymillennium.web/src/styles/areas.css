@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    background-color: white;
+}
+
+.header {
+    grid-area: header;
+    border: 1px solid red;
+    background-color: #ffe066;
+    border-radius: 5px;
+}
+.footer {
+    grid-area: footer;
+}
+.content {
+    grid-area: content;
+    border: 1px solid red;
+    border-radius: 5px;
+}
+.sidebar {
+    grid-area: sidebar;
+}
+
+.wrapper {
+    width: min(100% - 40px, 1000px);
+    margin: 0 auto;
+
+    background-color: #fff8dc;
+
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-areas:
+    "header header header"
+    "content content content"
+    "footer footer footer";
+}

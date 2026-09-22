@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import React from 'react'
 import { ImageUploadForm } from './components/ImageUploadForm'
-import './App.css'
+// import './App.css'
+import './styles/areas.css'
 import { ImageGallery } from './components/ImageGallery'
 
 
@@ -10,22 +10,34 @@ function App() {
 
   return (
     <>
+    <div className="wrapper">
+      <header className="header">This page is up!</header>
+      <main className='content'>
+        
+        <section id='introduction'>
+          <div>
+            <h1>Welcome!</h1>
+          </div>
+          <section id="spacer"/>
+          <div>
+            <h2> Some introduction text... </h2>
+            <img className="base" width="170" height="80" alt="" />
+          </div>
+        </section>
+        <br/>
+        <section id='upload-image'>
+          <ImageUploadForm/>
+        </section>
+        <section id='gallery'>
+          <ImageGallery/>
+        </section>
+      </main>
+
+    </div>
       <section id="center">
-        <div>
-          <h1>This page is up!</h1>
-        </div>
       </section>
-      <section id="spacer"></section>
-      <section id="introduction">
-        <div className="hero">
-          <h2> Some introduction text... </h2>
-          <img className="base" width="170" height="80" alt="" />
-        </div>
-      </section>
-      <br/>
-      <ImageUploadForm/>
-      <ImageGallery/>
       
+
       {/* <section
         style={{
           padding: '10px',
@@ -61,34 +73,7 @@ function App() {
           </select>
         </section>
       </section> */}
-<br></br>
-      <section>
-        <div>
-          <div id="song-info">
-            <h3> Playing: The killers --- </h3>
-          </div>
-          <span>
-            <button className="buttonPlay"
-              type="button"
-              onClick={() => "doSomething"}
-            >
-              play
-            </button>
-            <text> </text>
-            <button className="buttonStop"
-              type="button"
-              onClick={() => "doSomething"}
-            >
-              stop
-            </button> 
-          </span>
-          <br/>
-          <br/>
-        </div>
-      </section>
-      <section id="spacer"></section>
     </>
   )
 }
-
 export default App
