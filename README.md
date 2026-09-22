@@ -1,14 +1,12 @@
 # MyMillennium
 MyMillennium is a full-stack web application inspired by MySpace and similar early-2000s websites. The project is a hobby project focused primarily on backend development, system integrations and Azure services, while still providing a user-friendly experience.
 
-
 ## Features
 - Upload images with title, description and category
 - Browse uploaded images in a gallery
 - Generate thumbnails asynchronously after image upload
 - Display generated thumbnails in the gallery
 - Display the original image when a thumbnail is selected
-
 
 ## Technologies
 ### Backend
@@ -89,10 +87,12 @@ React Client
 ```
 The API retrieves the image metadata from SQL Server and generates time-limited SAS URLs that allow the React client to read the corresponding images stored in the private Blob Storage container. The React client displays the generated thumbnails in the gallery and uses the original image SAS URL when a thumbnail is selected.
 
-
+## User Interface
+<img src="docs/images/mymillennium-homepage.png"
+      alt="MyMillennium homepage"
+      width="600">
 
 ## Credits
-
 - Profile illustration: [Female Vectors by Vecteezy](https://www.vecteezy.com/free-vector/female)
 
 - Space background: Photo by [Joshua Woroniecki](https://unsplash.com/@joshuaworoniecki) on [Unsplash](https://unsplash.com/photos/blue-sky-with-stars-during-night-time-TspYRqQrErc).
