@@ -9,18 +9,31 @@ function App() {
     <>
     <div className="wrapper">
       <header className="header">This page is up!</header>
+
+      <div className="welcome">
+        <h1 className="welcome-title">
+          Welcome! &lt;3
+        </h1>
+        <span className='form-row'>
+          <img
+            className="basepicture"
+            src="/images/vecteezy_woman-profile-mascot-vector-illustration-female-avatar-icon_9749878.jpg"
+            alt="profile-avatar"
+          />
+          <p> Some introduction text... </p>
+        </span>
+      </div>
+
+      <div className="blogtext">
+        <h2 className="blogtitle">
+          Next plan for implementation
+        </h2>
+        <p>
+          sdfsdfds
+        </p>
+      </div>
+      
       <main className='content'>
-        
-        <section id='introduction'>
-          <div>
-            <h1>Welcome!</h1>
-          </div>
-          <section id="spacer"/>
-          <div>
-            <h2> Some introduction text... </h2>
-            <img className="base" width="170" height="80" alt="" />
-          </div>
-        </section>
         <br/>
         <section id='upload-image'>
           <ImageUploadForm/>

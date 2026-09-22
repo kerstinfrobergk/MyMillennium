@@ -18,27 +18,34 @@ export function ImageGallery(){
 
     return(
         <section className="image-gallery" >
-            <div>
-                <h2 className="gallery-heading">Gallery</h2>
-            </div>
-            <div className="gallery-thumbnails" >
+            <h2 className="gallery-section-title">My Gallery</h2>
+
+            <div className="gallery-thumbnails">
+                
                 {galleryItems.map((item) => (
-                    <div key={item.imageUrl}
-                        className="thumbnail-container"
+                    <div
+                        key={item.imageUrl}
+                        className="gallery-item"
                     >
-                        {item.thumbnailUrl ? (
-                            <img
-                                src={item.thumbnailUrl}
-                                alt={item.title ?? ""}
-                                title={item.title ?? ""}
-                                className="thumbnail-image"
-                                onClick={() => setSelectedImage(item)}
-                            />
-                        ) : (
-                            <div className="thumbnail-placeholder" >
-                                processing...
-                            </div>
-                        )}
+                        <div className="thumbnail-title">
+                            {item.title}
+                        </div>
+
+                        <div className="thumbnail-container">
+                            {item.thumbnailUrl ? (
+                                <img
+                                    src={item.thumbnailUrl}
+                                    alt={item.title ?? ""}
+                                    title={item.title ?? ""}
+                                    className="thumbnail-image"
+                                    onClick={() => setSelectedImage(item)}
+                                />
+                            ) : (
+                                <div className="thumbnail-placeholder" >
+                                    processing...
+                                </div>
+                            )}
+                        </div>
                     </div>
                 ))}
             </div>
