@@ -30,29 +30,25 @@ export function ImageGallery(){
             <div>
                 <h2 style={{ color: '#063b4b' }}>Gallery</h2>
             </div>
-            <div
-                style={{
-                    margin: '10px',
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "16px",
-                }}>
+            <div className="gallery-thumbnails" >
                 {galleryItems.map((item) => (
-                    <img
-                        key={item.imageUrl}
-                        src={item.imageUrl}
-                        alt={item.title}
-                        title={item.title}
-                        onClick={() => setSelectedImage(item)}
-                        style={{
-                            width: "80px",
-                            aspectRatio: "1/1",
-                            objectFit: "cover",
-                            cursor: "pointer",
-                            marginBottom: "6px",
-                            border: "2px solid"
-                        }}
-                    />
+                    <div key={item.imageUrl}
+                        className="thumbnail-container"
+                    >
+                        {item.thumbnailUrl ? (
+                            <img
+                                src={item.thumbnailUrl}
+                                alt={item.title ?? ""}
+                                title={item.title ?? ""}
+                                className="thumbnail-image"
+                                onClick={() => setSelectedImage(item)}
+                            />
+                        ) : (
+                            <div className="thumbnail-placeholder" >
+                                processing...
+                            </div>
+                        )}
+                    </div>
                 ))}
             </div>
 
