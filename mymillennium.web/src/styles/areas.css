@@ -1,0 +1,260 @@
+.header {
+    grid-area: header;
+    background-color: #2a30d3;
+    padding: 4px;
+    text-align: right;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+.content {
+    grid-area: content;
+    background-color: white;
+    text-align: center;
+}
+
+.sidebar {
+    grid-area: sidebar;
+}
+
+.welcome {
+    margin: 8px;
+    grid-area: welcome;
+    background: #5d9de8;
+    border: 2px solid #3b6fa8;
+}
+
+.welcome-title{
+    margin: 10px auto 10px;
+    padding: 6px 10px;
+
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.basepicture {
+    margin-left: 10px;
+    width: 70px;
+    height: 80px;
+}
+
+.blog {
+    grid-area: blog;
+    margin: 12px 32px;
+}
+
+.blogtitle {
+    margin-top: 0 0 8px 0;
+    color: black;
+    font-weight: bold;
+    font-size: 20px
+}
+
+.updates-list {
+    margin: 0;
+    list-style: none;
+    padding-left: 0;
+}
+
+.wrapper {
+    width: min(100% - 40px, 1000px);
+    margin:  auto;
+
+    background-color: white;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+    "header header header"
+    "welcome blog blog"
+    "content content content"
+    "footer footer footer";
+}
+
+
+/* IMAGE UPLOAD */
+.image-upload-form {
+    min-width: 500px;
+    max-width: 600px;
+    margin: 8px auto;
+    background: #DBEAFF;
+    
+    border: 2px solid #38b5f4;    
+}
+
+.section-title {
+    padding: 12px 8px;
+    
+    background: #38b5f4;
+
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    color: white;
+}
+
+.upload-content {
+    padding: 8px;
+}
+
+.form-row{
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.form-row > span {
+    text-align: left;
+}
+
+.form-row input,
+.form-row select {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.file-selection {
+    display: flex;
+    gap: 8px;
+    min-width: 0;
+}
+
+.file-name {
+    border: 1px solid #888;
+    background: white;
+    padding: 3px 8px;
+    min-width: 180px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.browse-button {
+    padding: 2px 14px;
+    margin-right: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.upload-button {
+    padding: 2px 14px;
+    background-color: violet;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+/* IMAGE GALLERY */
+.image-gallery {
+    min-width: 500px;
+    max-width: 600px;
+    min-height: 200px;
+    margin: 8px auto;
+
+    background: white;
+    border: 2px solid #9d8e09;
+}
+
+.gallery-section-title{
+    padding: 4px 8px;
+
+    background: #f4c75b;
+
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    color: black;
+}
+
+.gallery-thumbnails {
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.gallery-item{
+    width: 80px;
+}
+
+.thumbnail-title{
+    width: 80px;
+    margin-bottom: 4px;
+
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.thumbnail-container {
+    width: 80px;
+    aspect-ratio: 1 / 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid;
+}
+
+.thumbnail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.thumbnail-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #ddd;
+    color: #777;
+    font-size: 11px;
+    text-align: center;
+}
+
+.selected-image {
+    margin-top: 10px;
+}
+
+.selected-image img {
+    width: 100%;
+    display: block;
+}
+
+/* .buttonPlay {
+  border-radius: 5px;
+  font-size: 15px;
+  padding: 8px 16px;
+  background: rgba(14, 185, 22, 0.985);
+  color: rgba(247, 245, 244, 0.816);
+  border: 2px solid rgba(83, 83, 83, 0.943);
+}
+
+.buttonStop {
+  border-radius: 5px;
+  font-size: 15px;
+  padding: 8px 16px;
+  background: rgba(238, 49, 39, 0.888);
+  color: rgba(247, 245, 244, 0.816);
+  border: 2px solid rgba(83, 83, 83, 0.943);
+} */

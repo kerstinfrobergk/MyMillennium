@@ -1,4 +1,4 @@
-﻿namespace MyMillenniumApi.Data
+﻿namespace MyMillennium.Data.Entities
 {
     public class ArtItem
     {
@@ -7,11 +7,21 @@
         public string Description { get; set; } = string.Empty;
         public Category ItemCategory { get; set; } = Category.Inspiration;
         public string BlobName { get; set; } = string.Empty;
+        public ProcessingStatus ProcessingStatus { get; set; } = ProcessingStatus.Pending;
+        public string? ThumbnailBlobName {  get; set; } = string.Empty;
     }
 
     public enum Category
     {
+        //TODO: Consider what categories make sense
         Inspiration = 0,
         ProfilePicture = 1,
+    }
+
+    public enum ProcessingStatus
+    {
+        Pending = 0,
+        Completed = 1,
+        Failed = 2
     }
 }

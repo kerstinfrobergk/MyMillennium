@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using Azure.Storage.Sas;
 
 namespace MyMillenniumApi.Services
 {
@@ -9,15 +10,27 @@ namespace MyMillenniumApi.Services
         public BlobStorageService(BlobServiceClient blobServiceClient, IConfiguration config)
         {
             _blobServiceClient = blobServiceClient;
-            _containerName = config["AzureStorage:ContainerName"] ?? throw new InvalidOperationException("Azure Storage container name is not valid.");
+            _containerName = config["AzureStorage:ContainerName"] ?? throw new InvalidOperationException("Blob container name could not be found.");
         }
 
-        public async Task UploadFileAsync(Stream stream, string blobName)
+        public async Task UploadBlobAsync(Stream stream, string blobName)
         {
             var blobContainerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
             var blobClient = blobContainerClient.GetBlobClient(blobName);
 
             await blobClient.UploadAsync(stream, overwrite: true);
+        }
+
+        public string GetBlobSasUrl(string blobName)
+        {
+            var blobContainerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
+            var blobClient = blobContainerClient.GetBlobClient(blobName);
+
+            var sasUri = blobClient.GenerateSasUri(
+                BlobSasPermissions.Read,
+                DateTimeOffset.UtcNow.AddMinutes(30));
+
+            return sasUri.ToString();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Azure.Messaging.ServiceBus;
+using MyMillennium.Contracts.Messages;
 
 namespace MyMillenniumApi.Services
 {

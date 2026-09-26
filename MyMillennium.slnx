@@ -1,5 +1,7 @@
 <Solution>
   <Project Path="MyMilleniumWeb/MyMilleniumWeb.csproj" />
+  <Project Path="MyMillennium.Contracts/MyMillennium.Contracts.csproj" Id="90bd527e-59a3-4527-850c-458f7f9ce3d0" />
+  <Project Path="MyMillennium.Data/MyMillennium.Data.csproj" Id="1bace881-7717-4981-b861-d545e84d3cd3" />
   <Project Path="MyMillennium.Functions/MyMillennium.Functions.csproj" Id="d2bdba71-3bc1-40bf-b0e5-d0522e8eee61" />
   <Project Path="MyMillennium.Web/mymillennium.web.esproj">
     <Build />

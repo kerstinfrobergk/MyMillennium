@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyMillenniumApi.Data;
+using Microsoft.EntityFrameworkCore;
+using MyMillennium.Contracts.Messages;
+using MyMillennium.Data.DataAccess;
+using MyMillenniumApi.DTOs;
+using MyMillennium.Data.Entities;
 using MyMillenniumApi.Services;
 
 namespace MyMillenniumApi.Controllers
@@ -31,7 +35,7 @@ namespace MyMillenniumApi.Controllers
             var filePathExtension = Path.GetExtension(file.FileName);
             var blobName = $"{Guid.NewGuid()}{filePathExtension}";
 
-            await _blobStorageService.UploadFileAsync(stream, blobName);
+            await _blobStorageService.UploadBlobAsync(stream, blobName);
 
             var artItem = new ArtItem()
             {
@@ -51,6 +55,37 @@ namespace MyMillenniumApi.Controllers
             await _serviceBusService.SendProcessArtImageAsync(message);
 
             return Ok();
+        }
+
+        [HttpGet("getImages")]
+        public async Task<IActionResult> GetImagesAsync()
+        {
+            var galleryItems = new List<ArtItemDto>();
+
+            var galleryItemsResult = await _dbContext.ArtItems
+                .Where(x => x.BlobName != null &&
+                            (x.ItemCategory == Category.Inspiration || x.ItemCategory == Category.ProfilePicture))  //TODO: Consider what filtering makes sense
+                .OrderByDescending(x => x.Id)
+                .Take(10)
+                .ToListAsync();
+
+            foreach (var galleryItem in galleryItemsResult)
+            {
+                var artItemDto = new ArtItemDto()
+                {
+                    Id = galleryItem.Id,
+                    ImageUrl = _blobStorageService.GetBlobSasUrl(galleryItem.BlobName),
+                    Title = galleryItem.Title,
+                    Description = galleryItem.Description,
+                    ThumbnailUrl = !string.IsNullOrWhiteSpace(galleryItem.ThumbnailBlobName)
+                        ? _blobStorageService.GetBlobSasUrl(galleryItem.ThumbnailBlobName)
+                        : null
+                };
+
+                galleryItems.Add(artItemDto);
+            }
+
+            return Ok(galleryItems);
         }
     }
 }

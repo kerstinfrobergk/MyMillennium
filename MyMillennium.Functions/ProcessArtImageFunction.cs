@@ -1,22 +1,22 @@
-using System;
-using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using MyMillenniumApi;
+using MyMillennium.Contracts.Messages;
+using MyMillennium.Functions.Services;
 
 namespace MyMillennium.Functions;
 
-public class Function1
+public class ProcessArtImageFunction
 {
-    private readonly ILogger<Function1> _logger;
-
-    public Function1(ILogger<Function1> logger)
+    private readonly ILogger<ProcessArtImageFunction> _logger;
+    private readonly ProcessArtImageService _processArtImageService;
+    public ProcessArtImageFunction(ILogger<ProcessArtImageFunction> logger, ProcessArtImageService processArtImageService)
     {
         _logger = logger;
+        _processArtImageService = processArtImageService;
     }
 
-    [Function(nameof(Function1))]
+    [Function(nameof(ProcessArtImageFunction))]
     public async Task Run(
         [ServiceBusTrigger("process-art-image", Connection = "ServiceBusConnection")]
         ServiceBusReceivedMessage message,
@@ -28,7 +28,10 @@ public class Function1
 
         var processArtImage = message.Body.ToObjectFromJson<ProcessArtImage>();
 
-        _logger.LogInformation($"Message retrieved from queue. Processing ArtItem: {processArtImage?.ArtItemId}, BlobName: {processArtImage?.BlobItemName}");
+        _logger.LogInformation($"Message retrieved from queue. Processing ArtItem: {processArtImage?.ArtItemId}, BlobName: {processArtImage?.BlobName}");
+
+        //TODO: Add error handling if processArtImage is null
+        await _processArtImageService.ProcessArtItemAsync(processArtImage);
 
         await messageActions.CompleteMessageAsync(message);
     }
