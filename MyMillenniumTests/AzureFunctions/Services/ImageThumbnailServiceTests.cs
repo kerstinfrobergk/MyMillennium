@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using MyMillennium.Functions.Services;
+﻿using MyMillennium.Functions.Services;
 using SixLabors.ImageSharp;
 
 namespace MyMillenniumTests.AzureFunctions.Services
@@ -18,8 +14,9 @@ namespace MyMillenniumTests.AzureFunctions.Services
             _uut = new ImageThumbnailService();
         }
 
-        // Test that return image is size 300x300 pixels
         [TestCase("road-to-cabin.jpg", 300, 300)]
+        [TestCase("tower-at-mols-bjerge.jpg", 300, 300)]
+        [TestCase("view-over-mols.jpg", 300, 300)]
         public void ResizeImageToThumbnailSize_ThumbnailHasSize300x300_ReturnTrue(
             string inputFileName,
             int expectedWidth,
