@@ -8,4 +8,5 @@
     <Deploy />
   </Project>
   <Project Path="MyMillennium/MyMillenniumApi.csproj" />
+  <Project Path="MyMillenniumTests/MyMillenniumTests.csproj" Id="392a51b7-d860-4831-b645-4aa8313df82a" />
 </Solution>
