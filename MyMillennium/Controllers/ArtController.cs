@@ -58,8 +58,16 @@ namespace MyMillenniumApi.Controllers
                 BlobName = blobName
             };
 
-            _dbContext.ArtItems.Add(artItem);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                _dbContext.ArtItems.Add(artItem);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                await _blobStorageService.DeleteBlobAsync(blobName);
+                throw;
+            }
 
             var message = new ProcessArtImage(
                 artItem.Id,

@@ -21,6 +21,14 @@ namespace MyMillenniumApi.Services
             await blobClient.UploadAsync(stream, overwrite: true);
         }
 
+        public async Task DeleteBlobAsync(string blobName)
+        {
+            var blobContainerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
+            var blobClient = blobContainerClient.GetBlobClient(blobName);
+
+            await blobClient.DeleteAsync();
+        }
+
         public string GetBlobSasUrl(string blobName)
         {
             var blobContainerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
