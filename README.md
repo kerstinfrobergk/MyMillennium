@@ -87,6 +87,10 @@ React Client
 ```
 The API retrieves the image metadata from SQL Server and generates time-limited SAS URLs that allow the React client to read the corresponding images stored in the private Blob Storage container. The React client displays the generated thumbnails in the gallery and uses the original image SAS URL when a thumbnail is selected.
 
+## In Progress
+- Improve error handling and API error responses
+- Expand test coverage
+
 ## User Interface
 <img src="docs/images/mymillennium-homepage.png"
       alt="MyMillennium homepage"
