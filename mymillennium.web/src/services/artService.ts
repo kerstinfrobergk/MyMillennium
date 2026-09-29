@@ -22,6 +22,11 @@ export async function uploadImage(
         body: formData
     });
 
+    if (!response.ok) {
+        const error = await response.json();
+        console.log(error);
+    }
+
     return response;
 }
 

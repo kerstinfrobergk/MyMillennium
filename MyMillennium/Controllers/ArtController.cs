@@ -16,6 +16,8 @@ namespace MyMillenniumApi.Controllers
         private readonly BlobStorageService _blobStorageService;
         private readonly ServiceBusService _serviceBusService;
 
+        private const long MaxFileSize = 200_000; // Represents 200 KB
+        
         public ArtController(AppDbContext dbContext, BlobStorageService blobStorageService, ServiceBusService serviceBusService)
         {
             _dbContext = dbContext;
@@ -24,24 +26,35 @@ namespace MyMillenniumApi.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadImage(
-            [FromForm] IFormFile file,
-            [FromForm] string title,
-            [FromForm] string description,
-            [FromForm] Category itemCategory)
+        public async Task<IActionResult> UploadImage([FromForm] ImageUploadRequest request)
         {
-            using var stream = file.OpenReadStream();
+            if (request.File.Length > MaxFileSize)
+            {
+                return BadRequest(
+                    new ErrorResponse($"Image too large. Max size is {MaxFileSize/1000} KB."));
+            }
 
-            var filePathExtension = Path.GetExtension(file.FileName);
+            var allowedExtensions = new[] { ".jpg, .jpeg, .png" };
+            var extension = Path.GetExtension(request.File.FileName).ToLowerInvariant();
+
+            if (!allowedExtensions.Contains(extension))
+            {
+                return BadRequest(
+                    new ErrorResponse("Filetype needs to be JPG, JPEG or PNG."));
+            }
+
+            using var stream = request.File.OpenReadStream();
+
+            var filePathExtension = Path.GetExtension(request.File.FileName);
             var blobName = $"{Guid.NewGuid()}{filePathExtension}";
 
             await _blobStorageService.UploadBlobAsync(stream, blobName);
 
             var artItem = new ArtItem()
             {
-                Title = title,
-                Description = description,
-                ItemCategory = itemCategory,
+                Title = request.Title,
+                Description = request.Description,
+                ItemCategory = request.ItemCategory,
                 BlobName = blobName
             };
 
