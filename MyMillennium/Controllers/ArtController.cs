@@ -34,7 +34,7 @@ namespace MyMillenniumApi.Controllers
                     new ErrorResponse($"Image too large. Max size is {MaxFileSize/1000} KB."));
             }
 
-            var allowedExtensions = new[] { ".jpg, .jpeg, .png" };
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
             var extension = Path.GetExtension(request.File.FileName).ToLowerInvariant();
 
             if (!allowedExtensions.Contains(extension))
