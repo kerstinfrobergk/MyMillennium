@@ -9,5 +9,6 @@ namespace MyMillennium.Data.DataAccess
         { }
 
         public DbSet<ArtItem> ArtItems => Set<ArtItem>();
+        public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
     }
 }
