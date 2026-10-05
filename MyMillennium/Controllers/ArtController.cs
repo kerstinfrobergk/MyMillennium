@@ -5,6 +5,7 @@ using MyMillennium.Data.DataAccess;
 using MyMillenniumApi.DTOs;
 using MyMillennium.Data.Entities;
 using MyMillenniumApi.Services;
+using System.Text.Json;
 
 namespace MyMillenniumApi.Controllers
 {
@@ -58,22 +59,27 @@ namespace MyMillenniumApi.Controllers
                 BlobName = blobName
             };
 
-            try
-            {
-                _dbContext.ArtItems.Add(artItem);
-                await _dbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                await _blobStorageService.DeleteBlobAsync(blobName);
-                throw;
-            }
+            await using var transaction =
+                await _dbContext.Database.BeginTransactionAsync();
+
+            _dbContext.ArtItems.Add(artItem);
+            await _dbContext.SaveChangesAsync();
 
             var message = new ProcessArtImage(
                 artItem.Id,
                 blobName);
 
-            await _serviceBusService.SendProcessArtImageAsync(message);
+            var outboxMessage = new OutboxMessage()
+            {
+                MessageType = nameof(ProcessArtImage),
+                Payload = JsonSerializer.Serialize(message),
+                CreatedAtUtc = DateTime.UtcNow
+            };
+
+            _dbContext.OutboxMessages.Add(outboxMessage);
+            await _dbContext.SaveChangesAsync();
+
+            await transaction.CommitAsync();
 
             return Ok();
         }
