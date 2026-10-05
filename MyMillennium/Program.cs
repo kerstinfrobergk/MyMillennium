@@ -62,9 +62,11 @@ namespace MyMillennium
 
             builder.Services.AddSingleton<IServiceBusService, ServiceBusService>();
 
+            builder.Services.AddHostedService<OutboxProcessingService>();
+
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
-            builder.Services.AddProblemDetails();
+            builder.Services.AddProblemDetails();            
 
             var app = builder.Build();
 
