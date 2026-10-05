@@ -15,11 +15,11 @@ namespace MyMillenniumApi.Controllers
     {
         private readonly AppDbContext _dbContext;
         private readonly BlobStorageService _blobStorageService;
-        private readonly ServiceBusService _serviceBusService;
+        private readonly IServiceBusService _serviceBusService;
 
         private const long MaxFileSize = 200_000; // Represents 200 KB
         
-        public ArtController(AppDbContext dbContext, BlobStorageService blobStorageService, ServiceBusService serviceBusService)
+        public ArtController(AppDbContext dbContext, BlobStorageService blobStorageService, IServiceBusService serviceBusService)
         {
             _dbContext = dbContext;
             _blobStorageService = blobStorageService;

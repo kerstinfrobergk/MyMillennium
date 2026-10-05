@@ -60,7 +60,7 @@ namespace MyMillennium
                 return new ServiceBusClient(connectionString);
             });
 
-            builder.Services.AddSingleton<ServiceBusService>();
+            builder.Services.AddSingleton<IServiceBusService, ServiceBusService>();
 
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
