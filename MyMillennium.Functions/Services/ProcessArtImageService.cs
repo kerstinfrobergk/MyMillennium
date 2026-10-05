@@ -4,23 +4,27 @@ using MyMillennium.Data.Entities;
 
 namespace MyMillennium.Functions.Services
 {
-    public class ProcessArtImageService
+    public interface IProcessArtImageService
+    {
+        Task ProcessArtItemAsync(ProcessArtImage processArtImage, CancellationToken cancellationToken);
+    }
+    public class ProcessArtImageService : IProcessArtImageService
     {
         private readonly AppDbContext _dbContext;
-        private readonly BlobStorageService _blobStorageService;
-        private readonly ImageThumbnailService _imageThumbnailService;
+        private readonly IBlobStorageService _blobStorageService;
+        private readonly IImageThumbnailService _imageThumbnailService;
 
-        public ProcessArtImageService(AppDbContext dbContext, BlobStorageService blobStorageService, ImageThumbnailService imageThumbnailService)
+        public ProcessArtImageService(AppDbContext dbContext, IBlobStorageService blobStorageService, IImageThumbnailService imageThumbnailService)
         {
             _dbContext = dbContext;
             _blobStorageService = blobStorageService;
             _imageThumbnailService = imageThumbnailService;
         }
 
-        public async Task ProcessArtItemAsync(ProcessArtImage processArtImage)
+        public async Task ProcessArtItemAsync(ProcessArtImage processArtImage, CancellationToken cancellationToken)
         {
             var artItem = await _dbContext.ArtItems
-                .FindAsync(processArtImage.ArtItemId);
+                .FindAsync(processArtImage.ArtItemId, cancellationToken);
 
             if (artItem == null)
             {
@@ -29,9 +33,9 @@ namespace MyMillennium.Functions.Services
             }
 
             using var originalBlob = await _blobStorageService
-                .DownloadBlobAsync(processArtImage.BlobName);
+                .DownloadBlobAsync(processArtImage.BlobName, cancellationToken);
 
-            if(originalBlob == null)
+            if (originalBlob == null)
             {
                 //TODO: throw an exception instead so message don't complete
                 return;
@@ -43,12 +47,12 @@ namespace MyMillennium.Functions.Services
             var thumbnailBlobName = $"thumbnail/{Guid.NewGuid()}.jpg";
             
             await _blobStorageService
-                .UploadBlobAsync(thumbnail, thumbnailBlobName);
+                .UploadBlobAsync(thumbnail, thumbnailBlobName, cancellationToken);
 
             artItem.ThumbnailBlobName = thumbnailBlobName;
             artItem.ProcessingStatus = ProcessingStatus.Completed;
 
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -26,9 +26,9 @@ builder.Services.AddSingleton(sp =>
     return new BlobServiceClient(connectionString);
 });
 
-builder.Services.AddScoped<BlobStorageService>();
-builder.Services.AddScoped<ImageThumbnailService>();
-builder.Services.AddScoped<ProcessArtImageService>();
+builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
+builder.Services.AddScoped<IImageThumbnailService, ImageThumbnailService>();
+builder.Services.AddScoped<IProcessArtImageService, ProcessArtImageService>();
 
 builder.ConfigureFunctionsWebApplication();
 

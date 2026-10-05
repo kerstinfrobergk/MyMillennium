@@ -14,12 +14,12 @@ namespace MyMillenniumApi.Controllers
     public class ArtController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
-        private readonly BlobStorageService _blobStorageService;
+        private readonly IBlobStorageService _blobStorageService;
         private readonly IServiceBusService _serviceBusService;
 
         private const long MaxFileSize = 200_000; // Represents 200 KB
         
-        public ArtController(AppDbContext dbContext, BlobStorageService blobStorageService, IServiceBusService serviceBusService)
+        public ArtController(AppDbContext dbContext, IBlobStorageService blobStorageService, IServiceBusService serviceBusService)
         {
             _dbContext = dbContext;
             _blobStorageService = blobStorageService;
@@ -27,7 +27,9 @@ namespace MyMillenniumApi.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadImage([FromForm] ImageUploadRequest request)
+        public async Task<IActionResult> UploadImage(
+            [FromForm] ImageUploadRequest request,
+            CancellationToken cancellationToken)
         {
             if (request.File.Length > MaxFileSize)
             {
@@ -49,7 +51,7 @@ namespace MyMillenniumApi.Controllers
             var filePathExtension = Path.GetExtension(request.File.FileName);
             var blobName = $"{Guid.NewGuid()}{filePathExtension}";
 
-            await _blobStorageService.UploadBlobAsync(stream, blobName);
+            await _blobStorageService.UploadBlobAsync(stream, blobName, cancellationToken);
 
             var artItem = new ArtItem()
             {
@@ -60,10 +62,10 @@ namespace MyMillenniumApi.Controllers
             };
 
             await using var transaction =
-                await _dbContext.Database.BeginTransactionAsync();
+                await _dbContext.Database.BeginTransactionAsync(cancellationToken);
 
             _dbContext.ArtItems.Add(artItem);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(cancellationToken);
 
             var message = new ProcessArtImage(
                 artItem.Id,
@@ -77,15 +79,16 @@ namespace MyMillenniumApi.Controllers
             };
 
             _dbContext.OutboxMessages.Add(outboxMessage);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(cancellationToken);
 
-            await transaction.CommitAsync();
+            await transaction.CommitAsync(cancellationToken);
 
             return Ok();
         }
 
         [HttpGet("getImages")]
-        public async Task<IActionResult> GetImagesAsync()
+        public async Task<IActionResult> GetImagesAsync(
+            CancellationToken cancellationToken)
         {
             var galleryItems = new List<ArtItemDto>();
 
@@ -94,7 +97,7 @@ namespace MyMillenniumApi.Controllers
                             (x.ItemCategory == Category.Inspiration || x.ItemCategory == Category.ProfilePicture))  //TODO: Consider what filtering makes sense
                 .OrderByDescending(x => x.Id)
                 .Take(10)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
 
             foreach (var galleryItem in galleryItemsResult)
             {

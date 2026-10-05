@@ -46,7 +46,7 @@ namespace MyMillennium
                 return new BlobServiceClient(connectionString);
             });
 
-            builder.Services.AddScoped<BlobStorageService>();
+            builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 
             builder.Services.AddSingleton(sp =>
             {

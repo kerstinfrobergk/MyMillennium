@@ -3,7 +3,12 @@ using SixLabors.ImageSharp.Processing;
 
 namespace MyMillennium.Functions.Services
 {
-    public class ImageThumbnailService
+    public interface IImageThumbnailService
+    {
+        Stream ResizeImageToThumbnailSize(Stream originalBlob);
+    }
+
+    public class ImageThumbnailService : IImageThumbnailService
     {
         public Stream ResizeImageToThumbnailSize(Stream originalBlob)
         {

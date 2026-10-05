@@ -9,8 +9,8 @@ namespace MyMillennium.Functions;
 public class ProcessArtImageFunction
 {
     private readonly ILogger<ProcessArtImageFunction> _logger;
-    private readonly ProcessArtImageService _processArtImageService;
-    public ProcessArtImageFunction(ILogger<ProcessArtImageFunction> logger, ProcessArtImageService processArtImageService)
+    private readonly IProcessArtImageService _processArtImageService;
+    public ProcessArtImageFunction(ILogger<ProcessArtImageFunction> logger, IProcessArtImageService processArtImageService)
     {
         _logger = logger;
         _processArtImageService = processArtImageService;
@@ -20,7 +20,8 @@ public class ProcessArtImageFunction
     public async Task Run(
         [ServiceBusTrigger("process-art-image", Connection = "ServiceBusConnection")]
         ServiceBusReceivedMessage message,
-        ServiceBusMessageActions messageActions)
+        ServiceBusMessageActions messageActions,
+        CancellationToken cancellationToken)
     {
         _logger.LogInformation("Message ID: {id}", message.MessageId);
         _logger.LogInformation("Message Body: {body}", message.Body);
@@ -31,8 +32,8 @@ public class ProcessArtImageFunction
         _logger.LogInformation($"Message retrieved from queue. Processing ArtItem: {processArtImage?.ArtItemId}, BlobName: {processArtImage?.BlobName}");
 
         //TODO: Add error handling if processArtImage is null
-        await _processArtImageService.ProcessArtItemAsync(processArtImage);
+        await _processArtImageService.ProcessArtItemAsync(processArtImage, cancellationToken);
 
-        await messageActions.CompleteMessageAsync(message);
+        await messageActions.CompleteMessageAsync(message, cancellationToken);
     }
 }
