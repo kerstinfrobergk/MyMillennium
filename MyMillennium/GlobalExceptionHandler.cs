@@ -13,7 +13,6 @@ namespace MyMillenniumApi
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
 
-            // TODO: Replace with ProblemDetails for error response
             var response = new
             {
                 StatusCode = 500,
