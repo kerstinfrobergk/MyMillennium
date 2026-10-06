@@ -3,7 +3,13 @@ using Azure.Storage.Sas;
 
 namespace MyMillenniumApi.Services
 {
-    public class BlobStorageService
+    public interface IBlobStorageService
+    {
+        Task UploadBlobAsync(Stream stream, string blobName, CancellationToken cancellationToken);
+        string GetBlobSasUrl(string blobName);
+    }
+
+    public class BlobStorageService : IBlobStorageService
     {
         private readonly BlobServiceClient _blobServiceClient;
         private readonly string _containerName;
@@ -13,12 +19,12 @@ namespace MyMillenniumApi.Services
             _containerName = config["AzureStorage:ContainerName"] ?? throw new InvalidOperationException("Blob container name could not be found.");
         }
 
-        public async Task UploadBlobAsync(Stream stream, string blobName)
+        public async Task UploadBlobAsync(Stream stream, string blobName, CancellationToken cancellationToken)
         {
             var blobContainerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
             var blobClient = blobContainerClient.GetBlobClient(blobName);
 
-            await blobClient.UploadAsync(stream, overwrite: true);
+            await blobClient.UploadAsync(stream, overwrite: true, cancellationToken);
         }
 
         public string GetBlobSasUrl(string blobName)

@@ -3,6 +3,7 @@ using Azure.Storage.Blobs;
 using Microsoft.EntityFrameworkCore;
 using MyMillenniumApi.Services;
 using MyMillennium.Data.DataAccess;
+using MyMillenniumApi;
 
 namespace MyMillennium
 {
@@ -45,7 +46,7 @@ namespace MyMillennium
                 return new BlobServiceClient(connectionString);
             });
 
-            builder.Services.AddScoped<BlobStorageService>();
+            builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 
             builder.Services.AddSingleton(sp =>
             {
@@ -59,8 +60,13 @@ namespace MyMillennium
                 return new ServiceBusClient(connectionString);
             });
 
-            builder.Services.AddSingleton<ServiceBusService>();
+            builder.Services.AddSingleton<IServiceBusService, ServiceBusService>();
 
+            builder.Services.AddHostedService<OutboxProcessingService>();
+
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+            builder.Services.AddProblemDetails();            
 
             var app = builder.Build();
 
@@ -71,6 +77,11 @@ namespace MyMillennium
             }
 
             app.UseHttpsRedirection();
+
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler();
+            }
 
             app.UseCors("ReactClient");
 

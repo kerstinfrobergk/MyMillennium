@@ -1,32 +1,32 @@
 ﻿using Azure.Messaging.ServiceBus;
-using MyMillennium.Contracts.Messages;
 
 namespace MyMillenniumApi.Services
 {
-    public class ServiceBusService
+    public interface IServiceBusService
     {
-        private readonly ServiceBusClient _serviceBusClient;
+        Task SendMessageAsync(string payload, string messageType, CancellationToken cancellationToken);
+    }
+
+    public class ServiceBusService : IServiceBusService
+    {
         private readonly ServiceBusSender _sender;
 
         public ServiceBusService(ServiceBusClient serviceBusClient, IConfiguration config)
         {
-            _serviceBusClient = serviceBusClient;
             var queueName = config["AzureServiceBus:QueueName"] ?? throw new InvalidOperationException("Azure Service Bus queue name could not be found.");
 
-            _sender = _serviceBusClient.CreateSender(queueName);
+            _sender = serviceBusClient.CreateSender(queueName);
         }
 
-        public async Task SendProcessArtImageAsync(ProcessArtImage processArtImage)
+        public async Task SendMessageAsync(string payload, string messageType, CancellationToken cancellationToken)
         {
-            var messageBody = BinaryData.FromObjectAsJson(processArtImage);
-
-            var message = new ServiceBusMessage(messageBody)
+            var sbMessage = new ServiceBusMessage(payload)
             {
                 ContentType = "application/json",
-                Subject = nameof(ProcessArtImage),
+                Subject = messageType
             };
 
-            await _sender.SendMessageAsync(message);
+            await _sender.SendMessageAsync(sbMessage, cancellationToken);
         }
     }
 }
