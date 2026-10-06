@@ -6,7 +6,6 @@ namespace MyMillenniumApi.Services
     public interface IBlobStorageService
     {
         Task UploadBlobAsync(Stream stream, string blobName, CancellationToken cancellationToken);
-        Task DeleteBlobAsync(string blobName, CancellationToken cancellationToken);
         string GetBlobSasUrl(string blobName);
     }
 
@@ -26,14 +25,6 @@ namespace MyMillenniumApi.Services
             var blobClient = blobContainerClient.GetBlobClient(blobName);
 
             await blobClient.UploadAsync(stream, overwrite: true, cancellationToken);
-        }
-
-        public async Task DeleteBlobAsync(string blobName, CancellationToken cancellationToken)
-        {
-            var blobContainerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
-            var blobClient = blobContainerClient.GetBlobClient(blobName);
-
-            await blobClient.DeleteAsync(cancellationToken: cancellationToken);
         }
 
         public string GetBlobSasUrl(string blobName)
