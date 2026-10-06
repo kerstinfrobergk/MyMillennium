@@ -15,15 +15,12 @@ namespace MyMillenniumApi.Controllers
     {
         private readonly AppDbContext _dbContext;
         private readonly IBlobStorageService _blobStorageService;
-        private readonly IServiceBusService _serviceBusService;
-
         private const long MaxFileSize = 200_000; // Represents 200 KB
         
-        public ArtController(AppDbContext dbContext, IBlobStorageService blobStorageService, IServiceBusService serviceBusService)
+        public ArtController(AppDbContext dbContext, IBlobStorageService blobStorageService)
         {
             _dbContext = dbContext;
             _blobStorageService = blobStorageService;
-            _serviceBusService = serviceBusService;
         }
 
         [HttpPost("upload")]
@@ -93,8 +90,6 @@ namespace MyMillenniumApi.Controllers
             var galleryItems = new List<ArtItemDto>();
 
             var galleryItemsResult = await _dbContext.ArtItems
-                .Where(x => x.BlobName != null &&
-                            (x.ItemCategory == Category.Inspiration || x.ItemCategory == Category.ProfilePicture))  //TODO: Consider what filtering makes sense
                 .OrderByDescending(x => x.Id)
                 .Take(10)
                 .ToListAsync(cancellationToken);
