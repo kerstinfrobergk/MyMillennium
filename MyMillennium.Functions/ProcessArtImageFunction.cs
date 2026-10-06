@@ -27,13 +27,15 @@ public class ProcessArtImageFunction
         _logger.LogInformation("Message Body: {body}", message.Body);
         _logger.LogInformation("Message Content-Type: {contentType}", message.ContentType);
 
-        var processArtImage = message.Body.ToObjectFromJson<ProcessArtImage>();
+        var processArtImage = message.Body.ToObjectFromJson<ProcessArtImage>()
+            ?? throw new InvalidOperationException(
+                "Could not deserialize Service Bus message to ProcessArtImage.");
 
-        _logger.LogInformation($"Message retrieved from queue. Processing ArtItem: {processArtImage?.ArtItemId}, BlobName: {processArtImage?.BlobName}");
-
-        //TODO: Add error handling if processArtImage is null
-        await _processArtImageService.ProcessArtItemAsync(processArtImage, cancellationToken);
+        await _processArtImageService.ProcessArtItemAsync(processArtImage, cancellationToken);        
 
         await messageActions.CompleteMessageAsync(message, cancellationToken);
+
+        _logger.LogInformation("Service Bus message for ArtItem {ArtItemId} completed.",
+            processArtImage.ArtItemId);
     }
 }
